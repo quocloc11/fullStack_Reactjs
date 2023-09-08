@@ -34,22 +34,29 @@ class Login extends Component {
         this.setState({
             errMessage:''
         })
-   try{
-   let data= await handleLoginApi(this.state.username,this.state.password).then(res =>{
 
-       console.log('quocloc',res)
-   })
+        try{
 
-}catch (error){
-    if(error.response){
-        if(error.response.data){
+          let data= await handleLoginApi(this.state.username,this.state.password)
+          if(data && data.errCode !==0){
             this.setState({
-                errMessage:error.response.data.message
+                errMessage:data.message
             })
-        }
-    }
+          }
+          if(data && data.errCode === 0){
+            this.props.userLoginSuccess(data.user)
+            console.log('Login succeds')
 
-}
+          }
+        }catch(error){
+            if(error.response){
+                if(error.response.data){
+                    this.setState({
+                        errMessage:error.response.data.message
+                    })
+                }
+            }
+        }
 
     }
     handleShowHidePassword=()=>{
@@ -88,7 +95,9 @@ class Login extends Component {
                         <i class={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}></i>
                         </span>
                         </div>
+
                     </div>
+                    
                     <div classname='col-12' style={{color:'red'}}>
                         {this.state.errMessage}
                     </div>
@@ -121,8 +130,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        // userLoginFail: () => dispatch(actions.adminLoginFail()),
+
+        userLoginSuccess:(userInfor)=>dispatch(actions.userLoginSuccess(userInfor))
     };
 };
 
