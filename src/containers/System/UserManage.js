@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 // import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import {getAllUsers,createNewUserService,deleteUserService} from '../../services/userServive';
+import {getAllUsers,createNewUserService,deleteUserService,editUserServive} from '../../services/userServive';
 import ModalUser from './ModalUser';
-import {emitter} from "../../utils/emitter"
+import {emitter} from "../../utils/emitter";
+import ModalEditUser from './ModalEditUser';
 
 class UserManage extends Component {
 
@@ -13,6 +14,8 @@ class UserManage extends Component {
         this.state={
           arrUsers:[],
           isOpenModalUser:false,
+          isOpenModalEditUser:false,
+          userEdit:{}
 
         }
     }
@@ -38,6 +41,12 @@ class UserManage extends Component {
     toggeleUserModal =()=>{
       this.setState({
         isOpenModalUser:!this.state.isOpenModalUser
+      })
+    }
+
+    toggeleUserEditModal=()=>{
+      this.setState({
+        isOpenModalEditUser:!this.state.isOpenModalEditUser
       })
     }
 
@@ -73,6 +82,31 @@ class UserManage extends Component {
       }
     }
 
+    handleEditUser = (user)=>{
+      console.log('check edit user',user)
+      this.setState({
+        isOpenModalEditUser:true,
+        userEdit:user
+      })
+    }
+
+    doEditUser=async (user)=>{
+      try{
+        let res= await editUserServive(user)
+        if(res && res.errCode === 0){
+          this.setState({
+            isOpenModalEditUser:false
+          })
+          await this.getAllUsersFromReact()
+        }else{
+          alert(res.errCode)
+        }
+       
+      }catch(e){
+        console.log(e)
+      }
+      
+    }
 /** life cycle
  * reun component
  * 1.run construct -> init state
@@ -93,6 +127,15 @@ class UserManage extends Component {
               toggleFromParent={this.toggeleUserModal}
               createNewUser={this.createNewUser}
               />
+              {
+              this.state.isOpenModalEditUser &&
+              <ModalEditUser
+              isOpen={this.state.isOpenModalEditUser}
+               toggleFromParent={this.toggeleUserEditModal}
+               currentUser={this.state.userEdit}
+               editUser={this.doEditUser}
+              />
+             }
                 <div className='title text-center'>MANAGE USERS WITH QUOC LOC</div>
                 <div className='mx-1'>
                    <button className='btn btn-primary px-3'
@@ -120,7 +163,7 @@ class UserManage extends Component {
             <td>{item.lastName}</td>
             <td>{item.address}</td>
             <td>
-              <button className='btn-edit'><i className='fas fa-pencil-alt'></i></button>
+              <button className='btn-edit' onClick={()=>this.handleEditUser(item)}><i className='fas fa-pencil-alt'></i></button>
               <button className='btn-delete'onClick={()=>this.handleDeleteUser(item)}><i className='fas fa-trash'></i></button>
             </td>
             </tr>
