@@ -6,6 +6,28 @@ import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"
 
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", background: "red" }}
+        onClick={onClick}
+      />
+    );
+  }
+  
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", background: "green" }}
+        onClick={onClick}
+      />
+    );
+  }
+
 class Specialty extends Component {
 
     render() {
@@ -13,33 +35,46 @@ class Specialty extends Component {
             dots: true,
             infinite: true,
             speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1
+            slidesToShow: 4,
+            slidesToScroll: 2,
           };
           
         return (
-            <div className='sectio-specianlty'>
-                <div className='specialty-content'>
-               <Slider {...settings}>
-                <div className='img-customize'>
-                    <h3>1</h3>
+            <div className='section-specianlty'>
+                <div className='specialty-container'>
+                    <div className='specialty-header'>
+                        <span className='title-section'>Chuyên khoa phổ biến</span>
+                        <button className='btn-section'>Xem thêm</button>
+                    </div>
+                    <div className='speacialty-body'>
+                    <Slider {...settings}>
+                <div className='spcialty-customize'>
+                    <div className='bg-image'/>
+                    <div>Cơ xương khớp 1</div>
                 </div>
-                <div className='img-customize'>
-                    <h3>2</h3>
+                <div className='spcialty-customize'>
+                <div className='bg-image'/>
+                    <div>Cơ xương khớp 2</div>
                 </div>
-                <div className='img-customize'>
-                    <h3>3</h3>
+                <div className='spcialty-customize'>
+                <div className='bg-image'/>
+                    <div>Cơ xương khớp 3</div>
                 </div>
-                <div className='img-customize'>
-                    <h3>4</h3>
+                <div className='spcialty-customize'>
+                <div className='bg-image'/>
+                    <div>Cơ xương khớp 4</div>
                 </div>
-                <div className='img-customize'>
-                    <h3>5</h3>
+                <div className='spcialty-customize'>
+                <div className='bg-image'/>
+                    <div>Cơ xương khớp 5</div>
                 </div>
-                <div className='img-customize'>
-                    <h3>6</h3>
+                <div className='spcialty-customize'>
+                <div className='bg-image'/>
+                    <div>Cơ xương khớp 6</div>
                 </div>
                </Slider>
+                    </div>
+              
                 </div>
                 </div>
         );
