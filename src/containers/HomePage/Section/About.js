@@ -14,7 +14,7 @@ class About extends Component {
                </div>
                <div className='section-about-content'>
                <div className='content-left'>
-               <iframe width="100%" height="400px" src="https://www.youtube.com/embed/6oEm9ahwHRY" title="NHỮNG BÀI HÁT TIẾNG ANH BẤT HỦ HAY NHẤT MỌI THỜI ĐẠI - NHẠC ÂU MỸ - NHẠC US-UK HAY NHẤT 2022" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+               <iframe width="100%" height="400px" src="https://www.youtube.com/embed/6oEm9ahwHRY" title="NHỮNG BÀI HÁT TIẾNG ANH BẤT HỦ HAY NHẤT MỌI THỜI ĐẠI - NHẠC ÂU MỸ - NHẠC US-UK HAY NHẤT 2022" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                 </div>
                 <div className='content-right'>
                     <p>wrting</p>
