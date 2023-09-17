@@ -6,6 +6,8 @@ import * as actions from "../../../store/actions"
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
+import TableManageUser from './TableManageUser';
+
 class UserRedux extends Component {
     constructor(props){
         super(props);
@@ -59,6 +61,20 @@ class UserRedux extends Component {
                 position:arrPosition && arrPosition.length>0 ? arrPosition[0].key:''
             })
         }
+        if(prevProps.listUsers !== this.props.listUsers){
+            this.setState({
+                email:'',
+                password:'',
+                firstName:'',
+                lastName:'',
+                phoneNumber:'',
+                address:'',
+                gender:'',
+                position:'',
+                role:'',
+                avatae:''
+            })
+        }
     }
     handleOnchangeIma=(event)=>{
         let data =event.target.files;
@@ -82,6 +98,8 @@ class UserRedux extends Component {
        let isValid= this.checkValidateInput()
        if(isValid===false) return;
 
+       
+
        this.props.createNewUser({
         email: this.state.email,
         password:this.state.password,
@@ -93,7 +111,7 @@ class UserRedux extends Component {
         roleId:this.state.role,
         positionId:this.state.position
        })
-
+       
 
     }
     checkValidateInput=()=>{
@@ -138,7 +156,7 @@ class UserRedux extends Component {
                 </div>
                 <div className="user-redux-body" >
                     <div className='container'>
-                    <div className='container'>
+                    
                     <div className='row'>
                         <div className='col-12 my-3'><FormattedMessage id="manage-user.add"/></div>
                         <div className='col-12'>{isGetGenders === true ? 'Loading genders':""}</div>
@@ -247,15 +265,21 @@ class UserRedux extends Component {
                                     </div>
                                     
                                 </div>
-                                <div className='col-12 mt-3'>
+                                <div className='col-12 my-3'>
                                 <button className='btn btn-primary'
                                 onClick={()=>this.handleSaveUser()}
                                 ><FormattedMessage id="manage-user.save"/></button>
+                                
+                                
+                                </div>
+                                <div className='col-12 mb-5'>
+                                <TableManageUser/>
                                 </div>
                             </div>
-                        </div>
+                        
                     </div>
                 </div>
+               
                 {this.state.isOpen ===true &&
                 <Lightbox
                     mainSrc={this.state.previewImgURL}
@@ -275,7 +299,8 @@ const mapStateToProps = state => {
         genderRedux: state.admin.genders,
         roleRedux:state.admin.roles,
         positionRedux:state.admin.positions,
-        isLoadingGender:state.admin.isLoadingGender
+        isLoadingGender:state.admin.isLoadingGender,
+        listUsers:state.admin.users
 
     };
 };
@@ -288,7 +313,9 @@ const mapDispatchToProps = dispatch => {
 
         getRoleStart:()=>dispatch(actions.fetchRoleStart()),
 
-        createNewUser:(data)=>dispatch(actions.createNewUser(data))
+        createNewUser:(data)=>dispatch(actions.createNewUser(data)),
+
+        fetchUserRedux:()=> dispatch(actions.fetchAllUsersStart())
         // processLogout: () => dispatch(actions.processLogout()),
         // changeLanguageAppRedux:(languge)=>dispatch(actions.changeLanguageApp(languge))
     };
