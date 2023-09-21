@@ -55,7 +55,12 @@
         "image":"Ảnh đại diện",
         "save":"Lưu user",
         "edit":"Lưu thay đổi"
+    },
+    "homepage":{
+        "outstanding-doctor":"Bác Sĩ Nổi Bật Trong Tuần",
+        "more-infor":"Xem thêm"
     }
+
 
    
 }

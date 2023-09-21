@@ -12,15 +12,19 @@ import "slick-carousel/slick/slick-theme.css"
 import HandBook from './Section/HandBook';
 
 class HomePage extends Component {
-
+    // handleAfterChange=(index,dontAnimate)=>{
+    //     console.log('quo loc',index)
+    // }
     render() {
         let settings = {
             dots: false,
-            infinite: true,
+            infinite: false,
             speed: 500,
             slidesToShow: 4,
             slidesToScroll: 1,
+            // slickGoTo:this.handleAfterChange
           };
+
        
         return (
            <div>
