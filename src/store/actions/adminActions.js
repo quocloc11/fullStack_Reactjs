@@ -1,6 +1,6 @@
 import actionTypes from './actionTypes';
 import {getAllCodeService,createNewUserService,getAllUsers,deleteUserService
-     ,editUserService,getTopDoctorHomeService,
+     ,editUserService,getTopDoctorHomeService,getAllDoctors,saveDetailDoctorService
 } from "../../services/userServive"
 import {toast} from "react-toastify"
 export const fetchGenderStart = () => {
@@ -220,6 +220,62 @@ export const fetchTopDoctor=()=>{
             console.log('FETCH_TOP_DOCTORS_FAILEDED',e)
             dispatch({
                 type:actionTypes.FETCH_TOP_DOCTORS_FAILDED,
+               
+            })
+        }
+    }
+}
+export const fetchAllDoctors=()=>{
+    return async(dispatch,getState)=>{
+        try{
+          let res= await getAllDoctors()
+          console.log('check',res)
+         if(res && res.errCode===0){
+            dispatch({
+                type:actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+                dataDr:res.data
+            })
+         }else{
+            dispatch({
+                type:actionTypes.FETCH_ALL_DOCTORS_FAILDED,
+               
+            })
+         }
+        }catch(e){
+            console.log('FETCH_ALL_DOCTORS_FAILEDED',e)
+            dispatch({
+                type:actionTypes.FETCH_ALL_DOCTORS_FAILDED,
+               
+            })
+        }
+    }
+}
+
+export const saveDetailDoctor=(data)=>{
+    return async(dispatch,getState)=>{
+        try{
+          let res= await saveDetailDoctorService(data)
+          console.log('check',res)
+         if(res && res.errCode===0){
+            toast.success("Save Inofr the user succeed!")
+            dispatch({
+                type:actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
+                
+            })
+         }else{
+            toast.error("Save Inofr the user error!")
+
+            dispatch({
+                type:actionTypes.SAVE_DETAIL_DOCTOR_FAILDED,
+               
+            })
+         }
+        }catch(e){
+            toast.error("Save Inofr the user error!")
+
+            console.log('SAVE_DETAIL_DOCTOR_FAILDED',e)
+            dispatch({
+                type:actionTypes.SAVE_DETAIL_DOCTOR_FAILDED,
                
             })
         }
