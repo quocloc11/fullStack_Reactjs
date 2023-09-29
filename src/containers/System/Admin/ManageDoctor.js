@@ -6,21 +6,22 @@ import * as actions from "../../../store/actions"
 import './ManageDoctor.scss'
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
-import {LANGUAGES} from '../../../utils'
+import {CRUD_ACTIONS, LANGUAGES} from '../../../utils'
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
-
+import {getDetailInforDoctor} from "../../../services/userServive"
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 class ManageDoctor extends Component {
     constructor (props){
         super(props)
         this.state={
-          contenMarkdown:'',
+          contentMarkdown:'',
           contentHTML:'',
           selectedOption:'',
           description:'',
-          listDoctors:[]
+          listDoctors:[],
+          hasOlData:false
 
         }
     }
@@ -60,23 +61,41 @@ class ManageDoctor extends Component {
   
      handleEditorChange=({ html, text })=> {
         this.setState({
-            contenMarkdown:text,
+            contentMarkdown:text,
             contentHTML:html,
         })
   }
   handleSaveContentMardown=()=>{
-    console.log('state',this.state)
+    let {hasOlData}=this.state;
     this.props.saveDetailDoctor({
         contentHTML:this.state.contentHTML,
-        contentMarkdown:this.state.contenMarkdown,
+        contentMarkdown:this.state.contentMarkdown,
         description:this.state.description,
-        doctorId:this.state.selectedOption.value
+        doctorId:this.state.selectedOption.value,
+        action:hasOlData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE
     })
-    console.log('loc',this.state)
   }
-  handleChange = selectedOption => {
-    //console.log('quocloc',selectedOption)
+  handleChangeSelect =async (selectedOption) => {
    this.setState({ selectedOption })
+   let res= await getDetailInforDoctor(selectedOption.value)
+   if(res && res.errCode ===0 && res.data && res.data.Markdown){
+        let markdown=res.data.Markdown;
+        this.setState({
+        contentHTML:markdown.contentHTML,
+        contentMarkdown:markdown.contentMarkdown,
+        description:markdown.description,
+        hasOlData:true
+        })
+   }else{
+    this.setState({
+        contentHTML:'',
+        contentMarkdown:'',
+        description:'',
+        hasOlData:false
+        })
+   }
+   console.log('quocloc',res)
+
      // console.log(`Option selected:`, this.state.selectedOption)
     
   };
@@ -86,7 +105,7 @@ class ManageDoctor extends Component {
     })
   }
     render() {
-        console.log('lll',this.state)
+        let{hasOlData}=this.state
         return (
             <div className='manage-doctor-container'>
              <div className='manage-doctor-title'>
@@ -97,7 +116,7 @@ class ManageDoctor extends Component {
                     <label>Chọn bác sĩ</label>
                         <Select
                             value={this.state.selectedOption}
-                             onChange={this.handleChange}
+                             onChange={this.handleChangeSelect}
                             options={this.state.listDoctors}
                              />
                             </div>
@@ -113,11 +132,18 @@ class ManageDoctor extends Component {
                 </div>
                 <div className='manage-doctor-editor'>
                 <MdEditor 
-                style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} 
-                onChange={this.handleEditorChange} />
+                style={{ height: '500px' }} 
+                renderHTML={text => mdParser.render(text)} 
+                onChange={this.handleEditorChange} 
+                value={this.state.contentMarkdown}
+                />
                 </div>
-                <button onClick={()=>this.handleSaveContentMardown()} className='save-content-doctor'>
-                    Lưu Thông Tin</button>
+                <button onClick={()=>this.handleSaveContentMardown()}
+                 className={hasOlData ===true ? 'save-content-doctor' : 'create-content-doctor'}>
+                    {hasOlData ===true ? 
+                    <sapn>Lưu thông tin</sapn> : <span>Tạo thông tin</span>
+                      }
+                </button>
             </div>
         );
     }
