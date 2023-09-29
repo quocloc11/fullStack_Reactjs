@@ -65,11 +65,12 @@ class ManageDoctor extends Component {
         })
   }
   handleSaveContentMardown=()=>{
+    console.log('state',this.state)
     this.props.saveDetailDoctor({
         contentHTML:this.state.contentHTML,
         contentMarkdown:this.state.contenMarkdown,
         description:this.state.description,
-        doctorId:this.state.selectedOption
+        doctorId:this.state.selectedOption.value
     })
     console.log('loc',this.state)
   }
