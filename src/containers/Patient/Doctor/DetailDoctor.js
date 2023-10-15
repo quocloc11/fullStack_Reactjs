@@ -26,7 +26,6 @@ class DetailDoctor extends Component {
                 detailDoctor:res.data,
             })
         }
-        console.log('loc',res)
 
     }
   }
@@ -36,7 +35,7 @@ class DetailDoctor extends Component {
 
 
     render() {
-        console.log('tesssst1',this.state)
+       
         let{language}=this.props
         let{detailDoctor}=this.state;
         let nameVi='',nameEn=''
