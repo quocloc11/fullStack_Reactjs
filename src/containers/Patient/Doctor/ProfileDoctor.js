@@ -55,7 +55,9 @@ getInforDoctor=async (id)=>{
             return(
                      <>
                      <div>{time}- {date}</div>
-                     <div>14:45 - 15:00 - Thứ 4 - 18/10/2023</div>
+                     <div>
+                        <FormattedMessage id="patient.booking-modal.priceBooking"/>
+                    </div>
                      </>
                 )
             }
@@ -103,7 +105,7 @@ getInforDoctor=async (id)=>{
         
     </div>
     <div className='price'>
-        Giá khám:
+    <FormattedMessage id="patient.booking-modal.price"/>
             {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.VI &&
                
                 
