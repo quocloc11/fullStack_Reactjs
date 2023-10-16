@@ -89,7 +89,6 @@ class ManageDoctor extends Component {
         let dataSelectPayment =this.buidDataInputSelect(resPayment,'PAYMENT')
         let dataSelectProvince =this.buidDataInputSelect(resProvince,'PROVINCE')
 
-            console.log('data new',dataSelectPrice,dataSelectPayment,dataSelectProvince)
         this.setState({
             listPrice:dataSelectPrice,
             listPayment:dataSelectPayment,
@@ -221,7 +220,6 @@ handleOnChangeText=(event,id)=>{
 }
     render() {
         let{hasOlData}=this.state;
-        console.log('state',this.state)
 
         return (
             <div className='manage-doctor-container'>

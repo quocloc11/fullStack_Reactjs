@@ -82,7 +82,6 @@ class UserManage extends Component {
     }
 
     handleEditUser = (user)=>{
-      console.log('check edit user',user)
       this.setState({
         isOpenModalEditUser:true,
         userEdit:user
@@ -154,7 +153,6 @@ class UserManage extends Component {
   
  
     {  arrUsers && arrUsers.map((item,index)=>{
-        console.log('ss',item,index)
         return(
           <tr>
             <td>{item.email}</td>

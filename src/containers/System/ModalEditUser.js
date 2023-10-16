@@ -61,7 +61,6 @@ class ModalEditUser extends Component {
         // }
         
         for(let i=0;i< arrInput.length;i++){
-            console.log(this.state[arrInput[i]],arrInput[i])
 
             if(!this.state[arrInput[i]]){
                 isValid=false;
@@ -80,7 +79,6 @@ class ModalEditUser extends Component {
         }
     }
     render() {
-        console.log('check paren',this.props)
         return (
             <Modal
              isOpen={this.props.isOpen}

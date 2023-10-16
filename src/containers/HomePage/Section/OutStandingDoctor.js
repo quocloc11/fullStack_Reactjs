@@ -32,7 +32,6 @@ class OutStandingDoctor extends Component {
         let {language}=this.props
         // arrDoctors=arrDoctors.concat(arrDoctors).concat(arrDoctors)
        
-        console.log('login',arrDoctors)
         return (
             <div className=' section-share section-handbook'>
                 <div className='section-container'>

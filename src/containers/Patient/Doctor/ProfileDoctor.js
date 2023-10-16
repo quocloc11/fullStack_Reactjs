@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import {getProfileDoctorById} from '../../../services/userServive'
 import { LANGUAGES } from '../../../utils';
 import NumberFormat from 'react-number-format';
+import _ from 'lodash'
+import moment from 'moment/moment';
 
 class ProfileDoctor extends Component {
   constructor(props){
@@ -39,15 +41,36 @@ getInforDoctor=async (id)=>{
     }
 
 }
+    renderTimeBooking =(dataTime)=>{
+        let {language} =this.props;
+
+        if(dataTime && !_.isEmpty(dataTime)){
+            let time =language=== LANGUAGES.VI ?
+            dataTime.timeTypeData.valueVi : dataTime.timeTypeData.valueEn
+
+            let date =language=== LANGUAGES.VI ?
+             moment.unix(+dataTime.date /1000).format('dddd- DD/MM/YYYY')
+             :
+             moment.unix(+dataTime.date /1000).locale('en').format('ddd- MM/DD/YYYY')
+            return(
+                     <>
+                     <div>{time}- {date}</div>
+                     <div>14:45 - 15:00 - Thứ 4 - 18/10/2023</div>
+                     </>
+                )
+            }
+            return
+            <>
+            </>
+        }
     render() {
         let{dataProfile}=this.state
-        let {language}=this.props
+        let {language,isShowDescriptionDoctor,dataTime}=this.props
         let nameVi='',nameEn=''
         if(dataProfile && dataProfile.positionData){
             nameVi=`${dataProfile.positionData.valueVi},${dataProfile.lastName},${dataProfile.firstName}`;
             nameEn=`${dataProfile.positionData.valueEn},${dataProfile.firstName},${dataProfile.lastName}`;
        }
-        console.log('chascccs ',this.state)
        return(
         <div className='profile-doctor-container'>
         <div className='intro-doctor'>
@@ -61,11 +84,19 @@ getInforDoctor=async (id)=>{
                 {language===LANGUAGES.VI ? nameVi : nameEn}
             </div>
             <div className='down'>
+                {isShowDescriptionDoctor ===true ?
+                <>
                 {dataProfile && dataProfile.Markdown && dataProfile.Markdown.description
                 && 
                 <span>
                     {dataProfile.Markdown.description}
                 </span>
+                }
+                </>
+                :
+                <>
+                     {this.renderTimeBooking(dataTime)}
+                </>
                 }
             </div>
         </div>

@@ -105,7 +105,6 @@ getArrDays =(language)=>{
       isOpenModalBooking:true,
       dataScheduleTimeModal:time
     })
-    console.log('loc',time)
   }
   closeBookingClose=()=>{
     this.setState({
