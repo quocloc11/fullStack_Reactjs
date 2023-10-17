@@ -45,8 +45,6 @@ class TableManageUser extends Component {
         this.props.handleEditUserFromParentKey(user)
     }
     render() {
-      console.log('check listUsers',this.props.listUsers)
-       console.log('check state ',this.state.usersRedux)
       let arrUsers=this.state.usersRedux
         return (
             <React.Fragment>

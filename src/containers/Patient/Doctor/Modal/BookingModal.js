@@ -119,7 +119,6 @@ handleConfirmBooking=async ()=>{
         if(dataTime && !_.isEmpty(dataTime)){
             doctorId= dataTime.doctorId
         }
-        console.log('check',this.state)
        return(
         <Modal isOpen={isOpenModal} className={'booking-modal-container'}
         size="lg"
