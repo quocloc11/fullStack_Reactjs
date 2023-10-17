@@ -11,6 +11,7 @@ import { LANGUAGES } from '../../../../utils';
 import Select from 'react-select';
 import {postPatientBookAppoitment} from '../../../../services/userServive'
 import { toast } from 'react-toastify';
+import moment from 'moment/moment';
 class BookingModal extends Component {
   constructor(props){
     super(props);
@@ -92,8 +93,50 @@ handleOnchangeDatePiker=(date)=>{
 handleChangeSelect=(selectedOption)=>{
     this.setState({selectedGender:selectedOption})
 }
+
+
+// render() {
+//     let{dataProfile}=this.state
+//     let {language,isShowDescriptionDoctor,dataTime}=this.props
+//     let nameVi='',nameEn=''
+//     if(dataProfile && dataProfile.positionData){
+//         nameVi=`${dataProfile.positionData.valueVi},${dataProfile.lastName},${dataProfile.firstName}`;
+//         nameEn=`${dataProfile.positionData.valueEn},${dataProfile.firstName},${dataProfile.lastName}`;
+//    }
+buildTimeBooking =(dataTime)=>{
+    let {language} =this.props;
+
+    if(dataTime && !_.isEmpty(dataTime)){
+        let time =language=== LANGUAGES.VI ?
+        dataTime.timeTypeData.valueVi : dataTime.timeTypeData.valueEn
+
+        let date =language=== LANGUAGES.VI ?
+         moment.unix(+dataTime.date /1000).format('dddd- DD/MM/YYYY')
+         :
+         moment.unix(+dataTime.date /1000).locale('en').format('ddd- MM/DD/YYYY')
+         return `${time} -${date}`
+        }
+        return ''
+        
+    }
+
+    buildDoctorName=(dataTime)=>{
+        let {language} =this.props;
+         if(dataTime && !_.isEmpty(dataTime)){
+        let name = language === LANGUAGES.VI?
+        `${dataTime.doctorData.lastName} ${dataTime.doctorData.firstName}` 
+        :
+        `${dataTime.doctorData.firstName} ${dataTime.doctorData.lastName}`
+
+
+         return name
+        }
+        return ''
+    }
 handleConfirmBooking=async ()=>{
-    let date=new Date(this.state.birthday).getDate()
+    let date=new Date(this.state.birthday).getTime()
+    let timeString =this.buildTimeBooking(this.props.dataTime)
+    let doctorName =this.buildDoctorName(this.props.dataTime)
     let res=await postPatientBookAppoitment({
         email:this.state.email,
         fullName:this.state.fullName,
@@ -103,7 +146,10 @@ handleConfirmBooking=async ()=>{
         date:date,
         selectedGender:this.state.selectedGender.value,
         doctorId:this.state.doctorId,
-        timeType:this.state.timeType
+        timeType:this.state.timeType,
+        language:this.props.language,
+        timeString:timeString,
+        doctorName:doctorName
     })
     if(res && res.errCode ===0){
         toast.success('Booking a new appointment succed!')
