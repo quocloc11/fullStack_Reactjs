@@ -61,7 +61,8 @@
     },
     "homepage":{
         "outstanding-doctor":"Bác Sĩ Nổi Bật Trong Tuần",
-        "more-infor":"Xem thêm"
+        "more-infor":"Xem thêm",
+        "specialty-popluler":"Chuyên khoa phổ biến"
     },
     "manage-schedule":{
         "title":"Quản lý kế hoạch khám bệnh của bác sĩ",
