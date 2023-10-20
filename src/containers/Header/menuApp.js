@@ -73,10 +73,17 @@ export const doctorMenu = [
         menus:[
     { //quan ly kes hoach kham benh
         
-                name: 'menu.doctor.manage.schedule',link:'/doctor/manage-schedule'
+                name: 'menu.doctor.manage-schedule',link:'/doctor/manage-schedule'
                 
             
     },
+    { //quan ly benh nha kham benh cua bac si
+        
+        name: 'menu.doctor.manage-patient',link:'/doctor/manage-patient'
+        
+    
+    },
+    
     ]
     }
     
