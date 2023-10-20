@@ -15,7 +15,7 @@ class DetailSpecialty extends Component {
   constructor(props){
     super(props);
     this.state={
-        arrDoctorId:[7,8,9],
+        arrDoctorId:[],
         dataDetailSpecialty:{},
         listProvince:[]
     }
@@ -41,17 +41,26 @@ class DetailSpecialty extends Component {
                     })
                 }
             }
+            let dataProvince =resProvince.data;
+            
+            if(dataProvince && dataProvince.length > 0){
+                dataProvince.unshift({
+                    createdAt:null,
+                    keyMap:'ALL',
+                    type:"PROVINCE",
+                    valueEn:"ALL",
+                    valueVi:"Toàn Quốc"
+                })
+            }
             this.setState({
                 dataDetailSpecialty:res.data,
                 arrDoctorId:arrDoctorId,
-                listProvince:resProvince.data
+                listProvince:dataProvince ? dataProvince :[]
             })
         }
 
     }
   }
-
-
  async componentDidUpdate(prevProps, prevState, snapshot){
     if(this.props.language !== prevProps.language){
     
@@ -60,8 +69,33 @@ class DetailSpecialty extends Component {
 
 }
 
-handleOnChangeSelect=(event)=>{
-    console.log('ss',event.target.value)
+handleOnChangeSelect=async (event)=>{
+    if(this.props.match && this.props.match.params && this.props.match.params.id){
+        let id=this.props.match.params.id;
+        let location =event.target.value
+        let res= await getAllDetailSpecialtyById({
+            id:id,
+            location:location
+        })
+        if(res && res.errCode==0 ){
+            let data=res.data;
+            let arrDoctorId=[]
+            if(data && !_.isEmpty(res.data)){
+                let arr = data.doctorSpecialty;
+                if(arr && arr.length>0){
+                    arr.map(item=>{
+                        arrDoctorId.push(item.doctorId)
+                    })
+                }
+            }
+           
+            this.setState({
+                dataDetailSpecialty:res.data,
+                arrDoctorId:arrDoctorId,
+            })
+        }
+    
+    }
 }
     render() {
         let {arrDoctorId,dataDetailSpecialty,listProvince}=this.state
@@ -88,14 +122,13 @@ handleOnChangeSelect=(event)=>{
                     && listProvince.map((item,index)=>{
                         return(
                     <option key={index} value={item.keyMap}>
-                        {language.item === LANGUAGES.VI ? item.valueVi :item.valueEn}
+                        {language === LANGUAGES.VI ? item.valueVi :item.valueEn}
                     </option>
                             
                         )
                     })
                     }
-                    <option>1</option>
-                    <option>1</option>
+                    
                 </select>
             </div>
             {arrDoctorId && arrDoctorId.length >0 && 
@@ -109,7 +142,9 @@ handleOnChangeSelect=(event)=>{
                         <ProfileDoctor
                         doctorId={item}
                         isShowDescriptionDoctor={true}
-                        //dataTime={dataTime}
+                        isShowLinkDetail={true}
+                         isShowPrice={false}
+                        
                         />
                     </div>
                 </div>

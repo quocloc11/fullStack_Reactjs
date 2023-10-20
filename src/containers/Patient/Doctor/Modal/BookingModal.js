@@ -187,6 +187,8 @@ handleConfirmBooking=async ()=>{
                         doctorId={doctorId}
                         isShowDescriptionDoctor={false}
                         dataTime={dataTime}
+                        isShowLinkDetail={false}
+                         isShowPrice={true}
                         />
                     </div>
                    
