@@ -101,7 +101,7 @@ class Login extends Component {
 
                     </div>
                     
-                    <div classname='col-12' style={{color:'red'}}>
+                    <div className='col-12' style={{color:'red'}}>
                         {this.state.errMessage}
                     </div>
                     <div className='col-12'>

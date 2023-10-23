@@ -35,7 +35,7 @@ class ModalEditUser extends Component {
             })
         }
        
-        console.log('disdmout',this.props.currentUser)
+
     }
 
     toggle =()=>{
