@@ -68,9 +68,23 @@
                     height: 120px;
                     border-radius:50% ;
                 }
-                &.section-handbook{
+                &.section-handbook1{
+                    background-image: url('../../assets/handbook/151514-gia-kham-suc-khoe-lai-xe.webp');
+                }
+                &.section-handbook2{
+                    background-image: url('../../assets/handbook/105530-chia-se-benh-tieu-duong.webp');
+                }
+                &.section-handbook3{
+                    background-image: url('../../assets/handbook/143751-dia-chi-kham-suc-khoe-di-lam-tphcm.webp');
+                }
+                &.section-handbook4{
+                    background-image: url('../../assets/handbook/151514-gia-kham-suc-khoe-lai-xe.webp');
+                }
+                &.section-handbook5{
+                    background-image: url('../../assets/handbook/172805-anh-bia-kham-suc-khoe-di-lam.webp');
+                }
+                &.section-handbook6{
                     background-image: url('../../assets/handbook/bao-tri-khop-goi.png');
-                       
                 }
             }
         }
@@ -126,7 +140,7 @@
         cursor: pointer;
 
         .customize-border{
-            border: 1px solid red;
+            border: 1px solid rgb(0, 255, 255);
             padding: 20px;
         }
     }

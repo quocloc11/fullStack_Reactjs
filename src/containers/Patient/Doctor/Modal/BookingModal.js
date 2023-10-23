@@ -12,6 +12,8 @@ import Select from 'react-select';
 import {postPatientBookAppoitment} from '../../../../services/userServive'
 import { toast } from 'react-toastify';
 import moment from 'moment/moment';
+import LoadingOverlay from 'react-loading-overlay';
+
 class BookingModal extends Component {
   constructor(props){
     super(props);
@@ -25,7 +27,8 @@ class BookingModal extends Component {
         selectedGender:'',
         genders:'',
         doctorId:'',
-        timeType:''
+        timeType:'',
+        isShowLoading:false
 
        
     }
@@ -134,6 +137,11 @@ buildTimeBooking =(dataTime)=>{
         return ''
     }
 handleConfirmBooking=async ()=>{
+    this.setState({
+        isShowLoading:true
+    })
+
+
     let date=new Date(this.state.birthday).getTime()
     let timeString =this.buildTimeBooking(this.props.dataTime)
     let doctorName =this.buildDoctorName(this.props.dataTime)
@@ -154,6 +162,11 @@ handleConfirmBooking=async ()=>{
         timeString:timeString,
         doctorName:doctorName
     })
+    this.setState({
+        isShowLoading:false
+    })
+
+
     if(res && res.errCode ===0){
         toast.success('Booking a new appointment succed!')
         this.props.closeBookingClose()
@@ -169,6 +182,13 @@ handleConfirmBooking=async ()=>{
             doctorId= dataTime.doctorId
         }
        return(
+        <LoadingOverlay
+        active={this.state.isShowLoading}
+        spinner
+        text='Loading...'
+        >
+
+
         <Modal isOpen={isOpenModal} className={'booking-modal-container'}
         size="lg"
         centered
@@ -277,6 +297,7 @@ handleConfirmBooking=async ()=>{
                 </div>
             </div>
         </Modal>
+        </LoadingOverlay>
        )
        
     }
